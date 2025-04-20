@@ -67,6 +67,7 @@ export default function Details() {
           className="bg-brown"
         ></input>
         <button>click</button>
+        <h1 className="text-red-800">dww</h1>
       </form>
     </div>
   );
