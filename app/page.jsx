@@ -44,6 +44,10 @@ export default function Home() {
       hoverColor: "group-hover:bg-green-500 group-hover:text-white",
     },
   ];
+
+  const handleLogin = () => {
+    window.location.href = "http://localhost:3000/api/auth/login";
+  };
   return (
     <div>
       <section className="min-h-screen flex flex-col items-center gap-4 bg-gradient-to-b  from-blue-900/20 via-transparent to-transparent">
@@ -62,7 +66,10 @@ export default function Home() {
           failures.
         </h1>
         <div className="flex flex-col sm:flex-row gap-4 mt-8">
-          <button className="bg-blue-600 h-12 text-sm font-medium px-4 rounded-md hover:bg-blue-700">
+          <button
+            className="bg-blue-600 h-12 text-sm font-medium px-4 rounded-md hover:bg-blue-700"
+            onClick={handleLogin}
+          >
             Get Started
           </button>
           <button className="bg-white/5 h-12 text-sm font-medium px-4 rounded-md hover:bg-white/10 border border-white/20">
