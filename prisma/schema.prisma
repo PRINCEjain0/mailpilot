@@ -1,0 +1,34 @@
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id Int @id @default(autoincrement())
+  name String 
+  email String @unique
+  profile String?
+  createdAt DateTime @default(now())
+  emails    Email[]
+}
+
+model Email{
+  id Int @id @default(autoincrement())
+  yourEmail String
+  name String
+  recipientEmail String
+  subject String
+  body String
+  scheduledTime DateTime
+  status String
+  createdAt DateTime @default(now())
+  userId Int
+  user User @relation(fields:[userId],references:[id])
+}
+
