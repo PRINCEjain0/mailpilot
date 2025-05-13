@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
-export async function Get(req) {
-  const { searchparams } = new URL(req.url);
+import prisma from "@/lib/prisma";
 
-  const code = searchparams.get("code");
+export async function GET(req) {
+  const { searchParams } = new URL(req.url);
+
+  const code = searchParams.get("code");
 
   if (!code) {
     return NextResponse.json({ error: "No code provided" }, { status: 400 });
@@ -10,7 +12,7 @@ export async function Get(req) {
 
   const token = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
-    header: {
+    headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({
@@ -38,6 +40,38 @@ export async function Get(req) {
   });
 
   const userData = await userRes.json();
+  console.log("Google User Data:", userData);
+  if (!userData.email) {
+    return NextResponse.json(
+      { error: "Failed to fetch user data" },
+      { status: 500 }
+    );
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: userData.email,
+    },
+  });
+
+  if (!user) {
+    const newUser = await prisma.User.create({
+      data: {
+        name: userData.name,
+        email: userData.email,
+        profile: userData.picture,
+      },
+    });
+
+    console.log("New user created:", newUser);
+
+    if (!newUser) {
+      return NextResponse.json(
+        { error: "Failed to create user" },
+        { status: 500 }
+      );
+    }
+  }
 
   const response = NextResponse.redirect("http://localhost:3000/");
   response.cookies.set("userEmail", userData.email, {
