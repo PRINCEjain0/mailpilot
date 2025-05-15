@@ -54,6 +54,10 @@ export async function GET(req) {
     },
   });
 
+  if (user) {
+    console.log("User already exists:", user);
+  }
+
   if (!user) {
     const newUser = await prisma.User.create({
       data: {

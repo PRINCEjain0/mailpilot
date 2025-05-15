@@ -1,14 +1,7 @@
 "use client";
-import {
-  ArrowRight,
-  Mail,
-  Sparkles,
-  Zap,
-  Shield,
-  Clock,
-  ChevronRight,
-} from "lucide-react";
+import { ClipboardType, Clock, Zap, Sparkles, Shield } from "lucide-react";
 import { motion } from "framer-motion";
+
 export default function Home() {
   const features = [
     {
@@ -48,18 +41,19 @@ export default function Home() {
   const handleLogin = () => {
     window.location.href = "http://localhost:3000/api/auth/login";
   };
+
   return (
     <div>
-      <section className="min-h-screen flex flex-col items-center gap-4 bg-gradient-to-b  from-blue-900/20 via-transparent to-transparent">
+      <section className="min-h-screen flex flex-col items-center gap-4 bg-gradient-to-b from-blue-900/20 via-transparent to-transparent">
         <div className="flex justify-center items-center gap-1 rounded-full bg-blue-500/10 backdrop-blur-sm py-2 px-4 mt-20 mb-4">
-          <div className="h-1 w-1 bg-blue-500 rounded-full "></div>
-          <p className="text-blue-400 text-xs ">
+          <div className="h-1 w-1 bg-blue-500 rounded-full"></div>
+          <p className="text-blue-400 text-xs">
             Next Generation Email Platform
           </p>
         </div>
         <div className="text-5xl sm:text-7xl font-bold flex flex-col items-center text-center">
           <h1>Email Scheduling</h1>
-          <h1 className=" text-blue-500">Reimagined</h1>
+          <h1 className="text-blue-500">Reimagined</h1>
         </div>
         <h1 className="text-lg text-white/70 max-w-2xl text-center mt-2">
           Schedule, track, and ensure email delivery with automatic resends for
@@ -78,15 +72,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="min-h-screen flex flex-col items-center gap-4 bg-gradient-to-b  from-purple-900/20 via-transparent to-transparent">
+      <section className="min-h-screen flex flex-col items-center gap-4 bg-gradient-to-b from-purple-900/20 via-transparent to-transparent">
         <div className="flex justify-center items-center gap-1 rounded-full bg-purple-500/10 backdrop-blur-sm py-2 px-4 mt-20 mb-4">
-          <div className="h-1 w-1 bg-purple-500 rounded-full "></div>
-          <p className="text-purple-400 text-xs ">Revolutionary Features</p>
+          <div className="h-1 w-1 bg-purple-500 rounded-full"></div>
+          <p className="text-purple-400 text-xs">Revolutionary Features</p>
         </div>
         <div className="flex gap-2 mb-6">
-          <h1 className="text-4xl font-bold ">Why Our Platform </h1>
-
-          <h1 className="text-4xl text-purple-500 font-bold"> Stands Out</h1>
+          <h1 className="text-4xl font-bold">Why Our Platform</h1>
+          <h1 className="text-4xl text-purple-500 font-bold">Stands Out</h1>
         </div>
         <h1>
           Discover the cutting-edge features that make our email scheduling
