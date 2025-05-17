@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { emailQueue } from "@/lib/queue";
 import prisma from "@/lib/prisma";
 function getCookies(req) {
   const cookie = req.headers.get("cookie") || "";
@@ -32,6 +33,8 @@ export async function POST(req) {
     return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
 
+  const emailId = await prisma.email.count();
+
   try {
     const emailData = await prisma.email.create({
       data: {
@@ -45,6 +48,25 @@ export async function POST(req) {
         userId: user.id,
       },
     });
+
+    await emailQueue.add(
+      "sendEmail",
+      {
+        email: email,
+        recipient: recipient,
+        subject: subject,
+        body: body,
+        emailId: emailId + 1,
+      },
+      {
+        delay: new Date(scheduleTime).getTime() - new Date().getTime(),
+        attempts: 3,
+        backoff: {
+          type: "exponential",
+          delay: 60000,
+        },
+      }
+    );
 
     console.log("Email scheduled successfully", emailData);
     return NextResponse.json(

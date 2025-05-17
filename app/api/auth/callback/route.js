@@ -81,6 +81,8 @@ export async function GET(req) {
   response.cookies.set("userEmail", userData.email, {
     path: "/",
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    secure: true,
     maxAge: 60 * 60 * 24 * 7,
   });
 
