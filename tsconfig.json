@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/page.jsx",
-    "lib/worker.js"
-  ],
+    "lib/worker.js",
+, "lib/queue.js"    "lib/redis.js"
+, "lib/prisma.js"  ],
   "exclude": ["node_modules"]
 }
