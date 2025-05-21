@@ -31,7 +31,8 @@
     "lib/worker.js",
     "lib/queue.js",
     "lib/redis.js",
-    "lib/prisma.js"
+    "lib/prisma.js",
+    "components/emailtable.jsx"
   ],
   "exclude": ["node_modules"]
 }
