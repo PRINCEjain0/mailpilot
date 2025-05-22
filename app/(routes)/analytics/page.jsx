@@ -1,4 +1,22 @@
+"use client";
 export default async function AnalyticsPage() {
+  useEffect(() => {
+    const fetchEmails = async () => {
+      const res = await fetch("/api/getEmail", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) {
+        console.error("Error fetching emails");
+        return;
+      }
+      const data = await res.json();
+      console.log(data);
+    };
+    fetchEmails();
+  });
   return (
     <>
       <div>
@@ -13,6 +31,23 @@ export default async function AnalyticsPage() {
           <h1 className="text-lg text-white/70 max-w-2xl text-center mt-2">
             Track and analyze all your scheduled emails in one place
           </h1>
+          <table>
+            <thead>
+              <tr>
+                <th>To</th>
+                <th>Subject</th>
+                <th>Sent At</th>
+                <th>Status</th>
+                <th>Opened At</th>
+                <th>Clicked At</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> </td>
+              </tr>
+            </tbody>
+          </table>
         </section>
       </div>
     </>
