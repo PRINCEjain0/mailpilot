@@ -1,4 +1,6 @@
 import prisma from "@/lib/prisma";
+import { NextResponse } from "next/server";
+
 function getCookies(req) {
   const cookie = req.headers.get("cookie") || "";
   const cookieObj = {};
@@ -16,20 +18,33 @@ export async function GET(req) {
   const userEmail = cookies.userEmail;
 
   if (!userEmail) {
-    return new Response("Unauthorized", { status: 401 });
+    return NextResponse.json({ message: "Please sign-in" }, { status: 400 });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: userEmail,
+    },
+  });
+
+  if (!user) {
+    return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
   try {
     const emails = await prisma.email.findMany({
       where: {
-        email: userEmail,
+        userId: user.id,
       },
     });
     if (!emails) {
       return new Response("No emails found", { status: 404 });
     }
-    return new Response(JSON.stringify(emails));
+    return NextResponse.json(emails);
   } catch (err) {
     console.error("Error fetching emails:", err);
-    return new Response("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      { message: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
