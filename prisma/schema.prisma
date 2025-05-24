@@ -27,6 +27,16 @@ model Email{
   body String
   scheduledTime DateTime
   status String
+  resendId      String? 
+  opened       Boolean   @default(false)
+  openedAt     DateTime?
+  clicked      Boolean   @default(false)
+  clickedAt    DateTime?
+  clickCount   Int       @default(0)
+  sentAt       DateTime?
+  deliveredAt  DateTime?
+  bouncedAt    DateTime?
+  complainedAt DateTime?
   createdAt DateTime @default(now())
   userId Int
   user User @relation(fields:[userId],references:[id])

@@ -49,7 +49,7 @@ export async function GET(req) {
     );
   }
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma.User.findUnique({
     where: {
       email: userData.email,
     },

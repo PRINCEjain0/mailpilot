@@ -1,6 +1,6 @@
 export default function Hero() {
   const handleLogin = () => {
-    window.location.href = "http://localhost:3000/api/auth/login";
+    window.location.href = "http://localhost:3000/form";
   };
 
   return (

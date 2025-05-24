@@ -30,14 +30,14 @@ export default function AnalyticsPage() {
 
   const openRate = sentEmails
     ? Math.round(
-        (emails.filter((e) => e.openedAt && e.status === "success").length /
+        (emails.filter((e) => e.opened && e.status === "success").length /
           sentEmails) *
           100
       )
     : 0;
   const clickRate = sentEmails
     ? Math.round(
-        (emails.filter((e) => e.clickedAt && e.status === "success").length /
+        (emails.filter((e) => e.clicked && e.status === "success").length /
           sentEmails) *
           100
       )
@@ -169,7 +169,7 @@ export default function AnalyticsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/10 backdrop-blur-sm border border-blue-500/20 text-xs font-medium mb-4"
+              className="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/10 backdrop-blur-sm border border-blue-500/20 text-xs font-medium mb-4 mt-4"
             >
               <span className="flex h-1 w-1 rounded-full bg-blue-500 mr-2"></span>
               <span className="text-blue-400">Email Analytics</span>
