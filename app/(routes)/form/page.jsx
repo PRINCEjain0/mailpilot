@@ -89,9 +89,33 @@ export default function form() {
     }
   };
 
+  // For DatePicker: restrict to >= now
+  const now = new Date();
+  const isToday =
+    scheduleTime &&
+    scheduleTime.getDate() === now.getDate() &&
+    scheduleTime.getMonth() === now.getMonth() &&
+    scheduleTime.getFullYear() === now.getFullYear();
+
+  function roundUpToNextMinute(date) {
+    const d = new Date(date);
+    d.setSeconds(0);
+    d.setMilliseconds(0);
+    if (d < date) d.setMinutes(d.getMinutes() + 1);
+    return d;
+  }
+  const minSelectableTime = isToday
+    ? roundUpToNextMinute(now)
+    : new Date(0, 0, 0, 0, 0, 0, 0);
+  const maxSelectableTime = new Date(0, 0, 0, 23, 59, 0, 0);
+
   const handleSubmit = async () => {
     if (!scheduleTime) {
       showToast("Please select a schedule time", "error");
+      return;
+    }
+    if (scheduleTime < new Date()) {
+      showToast("Scheduled time must be in the future", "error");
       return;
     }
     const data = {
@@ -367,10 +391,13 @@ export default function form() {
                 onChange={(date) => setScheduleTime(date)}
                 showTimeSelect
                 timeFormat="HH:mm"
-                timeIntervals={15}
+                timeIntervals={1}
                 dateFormat="dd-MM-yyyy h:mm aa"
                 placeholderText="Select date and time"
                 className="bg-black/80 text-white px-4 py-2 rounded-lg w-full border border-white/10 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 outline-none transition"
+                minDate={now}
+                minTime={minSelectableTime}
+                maxTime={maxSelectableTime}
               />
             </div>
             <div className="w-full flex flex-col bg-black/80 rounded-xl mt-6 p-4 border border-white/10">
