@@ -58,10 +58,8 @@ export default function PricingPage() {
   ];
 
   return (
-    <>
-      {/* <div className="fixed z-0 inset-0 bg-gradient-to-b from-green-900/20 via-transparent to-transparent"></div>
-      <div className="fixed z-0 inset-0 bg-gradient-to-b from-transparent via-purple-900/10 to-transparent"></div> */}
-
+    <div className="relative min-h-screen overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-green-900/40 via-black/80 to-purple-900/40 pointer-events-none"></div>
       <main className="container mx-auto px-4 py-16 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -193,6 +191,6 @@ export default function PricingPage() {
           </div>
         </motion.div>
       </main>
-    </>
+    </div>
   );
 }

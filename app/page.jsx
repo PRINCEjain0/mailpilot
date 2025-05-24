@@ -6,7 +6,7 @@ import Hero from "@/components/hero";
 
 export default function Home() {
   return (
-    <div className="bg-[#0d0d0d] text-white">
+    <div>
       {/* HERO SECTION */}
       <Hero />
       {/* FEATURES SECTION */}
