@@ -10,7 +10,10 @@ export default function AnalyticsPage() {
   useEffect(() => {
     const fetchEmails = async () => {
       try {
-        const res = await fetch("/api/getEmail");
+        const userEmail = localStorage.getItem("userEmail");
+        const res = await fetch(
+          `/api/getEmail?userEmail=${encodeURIComponent(userEmail)}`
+        );
         if (!res.ok) {
           console.error("Error fetching emails");
           return;
@@ -27,8 +30,6 @@ export default function AnalyticsPage() {
   }, []);
   const totalEmails = emails.length;
   const sentEmails = emails.filter((e) => e.status === "success").length;
-  const pendingEmails = emails.filter((e) => e.status === "pending").length;
-  const failedEmails = emails.filter((e) => e.status === "failed").length;
 
   const openRate = sentEmails
     ? Math.round(

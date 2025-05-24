@@ -118,6 +118,12 @@ export default function form() {
       showToast("Scheduled time must be in the future", "error");
       return;
     }
+    const userEmail = localStorage.getItem("userEmail");
+
+    if (!userEmail) {
+      showToast("Please  in to schedule emails", "error");
+      return;
+    }
     const data = {
       email,
       name,
@@ -125,6 +131,7 @@ export default function form() {
       subject,
       body,
       scheduleTime: scheduleTime.toISOString(),
+      userEmail,
     };
     const res = await fetch("/api/sendEmail", {
       method: "POST",
