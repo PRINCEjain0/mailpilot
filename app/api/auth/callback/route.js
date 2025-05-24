@@ -78,7 +78,14 @@ export async function GET(req) {
     }
   }
 
-  const redirectUrl = new URL("http://localhost:3000/");
-  redirectUrl.searchParams.set("userEmail", userData.email);
-  return NextResponse.redirect(redirectUrl);
+  const response = NextResponse.redirect("http://localhost:3000/");
+  response.cookies.set("userEmail", userData.email, {
+    path: "/",
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    secure: true,
+    maxAge: 60 * 60 * 24 * 7,
+  });
+
+  return response;
 }

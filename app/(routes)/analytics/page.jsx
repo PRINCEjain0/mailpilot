@@ -10,10 +10,7 @@ export default function AnalyticsPage() {
   useEffect(() => {
     const fetchEmails = async () => {
       try {
-        const userEmail = localStorage.getItem("userEmail");
-        const res = await fetch(
-          `/api/getEmail?userEmail=${encodeURIComponent(userEmail)}`
-        );
+        const res = await fetch(`/api/getEmail`);
         if (!res.ok) {
           console.error("Error fetching emails");
           return;

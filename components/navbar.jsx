@@ -6,8 +6,46 @@ export default function Navbar() {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
-    setIsSignedIn(!!localStorage.getItem("userEmail"));
+    const checkSignInStatus = async () => {
+      try {
+        console.log("Checking sign-in status...");
+        const res = await fetch("/api/checkSignIn", {
+          method: "GET",
+        });
+
+        if (res.ok) {
+          setIsSignedIn(true);
+          console.log("User is signed in");
+        } else {
+          setIsSignedIn(false);
+          console.log("User is not signed in");
+        }
+      } catch (error) {
+        console.error("Error checking sign-in status:", error);
+        setIsSignedIn(false);
+      }
+    };
+
+    checkSignInStatus();
   }, []);
+
+  const handleSignOut = async () => {
+    try {
+      const res = await fetch("/api/signOut", {
+        method: "POST",
+      });
+
+      if (res.ok) {
+        setIsSignedIn(false);
+        console.log("Signed out successfully");
+        window.location.href = "/";
+      } else {
+        console.error("Error signing out");
+      }
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
 
   return (
     <nav className="w-full flex items-center justify-between px-6 py-4 bg-transparent">
@@ -35,10 +73,7 @@ export default function Navbar() {
         {isSignedIn ? (
           <button
             className="px-4 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 font-medium transition"
-            onClick={() => {
-              localStorage.removeItem("userEmail");
-              setIsSignedIn(false);
-            }}
+            onClick={handleSignOut}
           >
             Sign Out
           </button>

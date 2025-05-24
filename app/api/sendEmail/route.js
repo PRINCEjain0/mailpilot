@@ -1,10 +1,23 @@
 import { NextResponse } from "next/server";
 import { emailQueue } from "@/lib/queue";
 import prisma from "@/lib/prisma";
-
+function getCookies(req) {
+  const cookie = req.headers.get("cookie") || "";
+  const cookieObj = {};
+  cookie.split(";").forEach((item) => {
+    const [key, value] = item.split("=").map((v) => v?.trim());
+    if (key && value) {
+      cookieObj[key] = decodeURIComponent(value);
+    }
+  });
+  return cookieObj;
+}
 export async function POST(req) {
-  const { email, name, recipient, subject, body, scheduleTime, userEmail } =
+  const { email, name, recipient, subject, body, scheduleTime } =
     await req.json();
+
+  const cookies = getCookies(req);
+  const userEmail = cookies.userEmail;
 
   if (!userEmail) {
     console.error("User email not found in cookies");
