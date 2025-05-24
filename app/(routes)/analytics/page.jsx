@@ -251,7 +251,7 @@ export default function AnalyticsPage() {
               <div className="px-6 py-4 border-b border-white/10">
                 <h2 className="text-lg font-semibold">Email Details</h2>
                 <p className="text-sm text-white/70">
-                  Detailed view of all your email campaigns
+                  Detailed view of all your email
                 </p>
               </div>
 
@@ -351,7 +351,7 @@ export default function AnalyticsPage() {
                               No emails found
                             </p>
                             <p className="text-sm">
-                              Start by scheduling your first email campaign
+                              Start by scheduling your first email
                             </p>
                           </div>
                         </td>

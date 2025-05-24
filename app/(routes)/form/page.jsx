@@ -64,7 +64,7 @@ export default function form() {
     if (res.ok) {
       alert("Email scheduled successfully");
     } else {
-      alert("Error scheduling email");
+      alert(res.message || "Failed to schedule email");
     }
   };
 

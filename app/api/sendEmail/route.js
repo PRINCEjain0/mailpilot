@@ -20,6 +20,7 @@ export async function POST(req) {
   const userEmail = cookies.userEmail;
 
   if (!userEmail) {
+    console.error("User email not found in cookies");
     return NextResponse.json({ message: "Please sign-in" }, { status: 400 });
   }
 
@@ -63,7 +64,7 @@ export async function POST(req) {
         attempts: 3,
         backoff: {
           type: "exponential",
-          delay: 60000,
+          delay: 10000,
         },
       }
     );
