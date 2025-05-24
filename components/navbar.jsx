@@ -8,17 +8,14 @@ export default function Navbar() {
   useEffect(() => {
     const checkSignInStatus = async () => {
       try {
-        console.log("Checking sign-in status...");
         const res = await fetch("/api/checkSignIn", {
           method: "GET",
         });
 
         if (res.ok) {
           setIsSignedIn(true);
-          console.log("User is signed in");
         } else {
           setIsSignedIn(false);
-          console.log("User is not signed in");
         }
       } catch (error) {
         console.error("Error checking sign-in status:", error);

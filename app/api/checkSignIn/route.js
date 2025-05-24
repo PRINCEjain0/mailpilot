@@ -15,7 +15,7 @@ export async function GET(req) {
   const cookies = getCookies(req);
   const userEmail = cookies.userEmail;
   if (!userEmail) {
-    return NextResponse.json({ message: "Please sign-in" }, { status: 400 });
+    return NextResponse.json({ message: "Please sign-in" });
   }
   return NextResponse.json({ userEmail: userEmail }, { status: 200 });
 }
