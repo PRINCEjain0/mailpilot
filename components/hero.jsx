@@ -1,6 +1,6 @@
 export default function Hero() {
   const handleLogin = () => {
-    window.location.href = "http://localhost:3000/form";
+    window.location.href = "https://mailpilot.princejain.tech/form";
   };
 
   return (
@@ -27,9 +27,6 @@ export default function Hero() {
           className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-sm font-medium transition"
         >
           Get Started
-        </button>
-        <button className="bg-white/5 hover:bg-white/10 border border-white/20 text-white px-6 py-3 rounded-md text-sm font-medium transition">
-          See How It Works
         </button>
       </div>
     </section>

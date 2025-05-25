@@ -5,7 +5,7 @@ export function middleware(request) {
   console.log("User Email from cookies:", userEmail);
   const { pathname } = request.nextUrl;
 
-  const protectedRoutes = ["/form", "/analytics"];
+  const protectedRoutes = ["/form", "/analytics", "/checkout"];
   const isProtectedRoute = protectedRoutes.some((route) =>
     pathname.startsWith(route)
   );
@@ -18,5 +18,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/form/:path*", "/analytics/:path*"],
+  matcher: ["/form/:path*", "/analytics/:path*", "/checkout/:path*"],
 };

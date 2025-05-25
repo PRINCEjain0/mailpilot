@@ -63,7 +63,7 @@ export default function Navbar() {
             href="/"
             className="text-xl sm:text-2xl font-bold text-blue-400 tracking-tight hover:text-blue-300 transition-colors"
           >
-            Mailpilot
+            MailPilot
           </Link>
 
           {/* Desktop Navigation Links */}

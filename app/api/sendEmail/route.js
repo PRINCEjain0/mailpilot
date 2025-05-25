@@ -49,7 +49,24 @@ export async function POST(req) {
         userId: user.id,
       },
     });
+    let tries = 1;
 
+    const plan = user.plan;
+
+    if (plan === "Creator") {
+      tries = 3;
+    } else if (plan === "Superuser") {
+      tries = 5;
+    }
+
+    const leftoverEmails = user.leftoverEmails;
+
+    if (leftoverEmails == 0) {
+      return NextResponse.json(
+        { message: "You have no leftover emails left, Please purchase" },
+        { status: 400 }
+      );
+    }
     await emailQueue.add(
       "sendEmail",
       {
@@ -61,13 +78,22 @@ export async function POST(req) {
       },
       {
         delay: new Date(scheduleTime).getTime() - new Date().getTime(),
-        attempts: 3,
+        attempts: tries,
         backoff: {
           type: "exponential",
           delay: 10000,
         },
       }
     );
+
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        leftoverEmails: leftoverEmails - 1,
+      },
+    });
 
     console.log("Email scheduled successfully", emailData);
     return NextResponse.json(

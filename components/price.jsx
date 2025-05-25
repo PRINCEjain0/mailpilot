@@ -13,6 +13,7 @@ export default function PricingPage() {
       features: [
         "Send up to 10 emails",
         "Automatic retries (1 retry if delivery fails)",
+        "Email analytics (open & click rates)",
         "Email support",
       ],
       color: "blue",
@@ -43,7 +44,7 @@ export default function PricingPage() {
       period: "/month",
       description: "For individuals who need high-volume sending.",
       features: [
-        "Unlimited emails",
+        "Send up to 500 emails",
         "Automatic retries (up to 5 times if delivery fails)",
         "Email analytics (open & click rates)",
         "Email performance insights",
@@ -158,17 +159,17 @@ export default function PricingPage() {
                     </ul>
 
                     <div className="space-y-4">
-                      {tier.name === "Enterprise" ? (
+                      {tier.name === "Superuser" ? (
                         <Link
-                          href="/contact"
+                          href={`/checkout?plan=${tier.name.toLowerCase()}`}
                           className={`w-full inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white border-0 rounded-md h-12 text-sm font-medium transition-all duration-300 group`}
                         >
-                          Contact Sales
+                          Get Started
                           <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                         </Link>
                       ) : tier.popular ? (
                         <Link
-                          href="/send"
+                          href={`/checkout?plan=${tier.name.toLowerCase()}`}
                           className={`w-full inline-flex items-center justify-center bg-purple-600 hover:bg-purple-700 text-white border-0 rounded-md h-12 text-sm font-medium transition-all duration-300 group`}
                         >
                           Get Started
@@ -176,8 +177,8 @@ export default function PricingPage() {
                         </Link>
                       ) : (
                         <Link
-                          href="/send"
-                          className={`w-full inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-md h-12 text-sm font-medium transition-all duration-300 group`}
+                          href="/form"
+                          className={`w-full inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-md h-12 text-sm font-medium transition-all duration-300 group`}
                         >
                           Get Started Free
                           <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
