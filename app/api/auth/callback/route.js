@@ -20,7 +20,7 @@ export async function GET(req) {
       code,
       client_id: process.env.GOOGLE_CLIENT_ID,
       client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: "http://localhost:3000/api/auth/callback",
+      redirect_uri: "https://mailpilot.princejain.tech/api/auth/callback",
       grant_type: "authorization_code",
     }),
   });
@@ -78,7 +78,7 @@ export async function GET(req) {
     }
   }
 
-  const response = NextResponse.redirect("http://localhost:3000/");
+  const response = NextResponse.redirect("https://mailpilot.princejain.tech/");
   response.cookies.set("userEmail", userData.email, {
     path: "/",
     httpOnly: true,
