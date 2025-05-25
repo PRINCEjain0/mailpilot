@@ -37,6 +37,13 @@ export async function POST(req) {
   const emailId = await prisma.email.count();
 
   try {
+    const leftoverEmails = user.leftoverEmails;
+    if (leftoverEmails == 0) {
+      return NextResponse.json(
+        { message: "You have no leftover emails left, Please purchase" },
+        { status: 400 }
+      );
+    }
     const emailData = await prisma.email.create({
       data: {
         yourEmail: email,
@@ -59,14 +66,6 @@ export async function POST(req) {
       tries = 5;
     }
 
-    const leftoverEmails = user.leftoverEmails;
-
-    if (leftoverEmails == 0) {
-      return NextResponse.json(
-        { message: "You have no leftover emails left, Please purchase" },
-        { status: 400 }
-      );
-    }
     await emailQueue.add(
       "sendEmail",
       {
