@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-export default function CheckoutPage() {
+
+function CheckoutContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const searchParams = useSearchParams();
@@ -115,10 +116,29 @@ export default function CheckoutPage() {
         {error && <p className="text-red-400 font-medium mt-4">{error}</p>}
         {!loading && !error && (
           <p className="text-green-400 font-medium mt-4">
-            If Razorpay didn’t open, please reload the page.
+            If Razorpay didn't open, please reload the page.
           </p>
         )}
       </div>
     </div>
+  );
+}
+
+function CheckoutFallback() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#0f172a] text-white px-4">
+      <div className="bg-gray-900 border border-gray-700 p-10 rounded-xl shadow-xl text-center max-w-md w-full">
+        <h1 className="text-2xl font-bold mb-4">Checkout</h1>
+        <p>Loading checkout...</p>
+      </div>
+    </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<CheckoutFallback />}>
+      <CheckoutContent />
+    </Suspense>
   );
 }

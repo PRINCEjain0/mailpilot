@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 export default function Navbar() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [leftoverEmails, setLeftoverEmails] = useState(0);
 
   useEffect(() => {
     const checkSignInStatus = async () => {
@@ -14,9 +15,13 @@ export default function Navbar() {
         });
 
         const data = await res.json();
-
-        if (data.userEmail) {
-          setIsSignedIn(true);
+        if (res.ok) {
+          setLeftoverEmails(data.leftoverEmails);
+          if (data.userEmail) {
+            setIsSignedIn(true);
+          } else {
+            setIsSignedIn(false);
+          }
         } else {
           setIsSignedIn(false);
         }
@@ -85,6 +90,24 @@ export default function Navbar() {
 
         {/* Desktop Auth Button */}
         <div className="hidden md:flex gap-3">
+          {isSignedIn && (
+            <div className="hidden md:flex items-center text-sm font-medium px-3 py-1 rounded-md bg-blue-900 text-blue-200 border border-blue-400">
+              Leftover Emails:{" "}
+              <span className="ml-1 font-semibold text-blue-300">
+                {leftoverEmails}
+              </span>
+            </div>
+          )}
+
+          <a
+            href="https://github.com/PRINCEjain0/mailpilot"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 px-3 py-2 rounded-md border border-yellow-400 bg-yellow-500 text-black font-semibold hover:bg-yellow-400 transition"
+          >
+            ⭐ Star on GitHub
+          </a>
+
           {isSignedIn ? (
             <button
               className="px-4 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 font-medium transition"
@@ -105,6 +128,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu Button */}
+
         <button
           className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1"
           onClick={toggleMobileMenu}
@@ -146,6 +170,24 @@ export default function Navbar() {
                 Analytics
               </Link>
               <div className="border-t border-white/10 pt-4 mt-2">
+                {isSignedIn && (
+                  <div className="text-sm font-medium px-3 py-2 rounded-md bg-blue-900 text-blue-200 border border-blue-400 mb-4">
+                    Leftover Emails:{" "}
+                    <span className="ml-1 font-semibold text-blue-300">
+                      {leftoverEmails}
+                    </span>
+                  </div>
+                )}
+
+                <a
+                  href="https://github.com/PRINCEjain0/mailpilot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 px-3 py-2 rounded-md border border-yellow-400 bg-yellow-500 text-black font-semibold hover:bg-yellow-400 transition"
+                >
+                  ⭐ Star on GitHub
+                </a>
+
                 {isSignedIn ? (
                   <button
                     className="w-full px-4 py-3 rounded-md text-white bg-blue-600 hover:bg-blue-700 font-medium transition text-lg"
