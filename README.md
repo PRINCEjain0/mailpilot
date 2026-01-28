@@ -1,61 +1,55 @@
-MailPilot
+# MailPilot
 
-MailPilot is an email scheduling system built to reliably send emails at a future time using background jobs instead of cron hacks.
+- Email scheduling system built to send emails reliably at a future time
+- Uses background jobs instead of cron-based scheduling
+- Designed with production reliability in mind
 
-Problem:
+## Problem
+- Cron jobs fail on server restarts
+- Scheduled tasks can be lost during crashes
+- Scaling cron-based systems is difficult
 
-Scheduling emails is unreliable when servers restart or traffic spikes.
-Cron jobs fail easily and do not scale.
+## How it works
+- User schedules an email from the frontend
+- Backend stores schedule and metadata in MySQL
+- A delayed job is added to Redis using BullMQ
+- Worker processes the job at the scheduled time
+- Email is sent and status is updated
 
-MailPilot uses a queue-based system so scheduled emails are not lost and can be retried safely.
+## Tech stack
 
-How it works:
+Frontend
+- Next.js
+- TypeScript
+- Tailwind CSS
 
-User schedules an email
-Backend stores data in MySQL
-A delayed job is added to Redis using BullMQ
-Worker sends the email at the scheduled time
-Status is updated
+Backend
+- Next.js API routes
+- Node.js
 
-Tech stack:
+Queue
+- Redis
+- BullMQ
 
-Frontend:
-Next.js
-TypeScript
-Tailwind CSS
+Database
+- MySQL
 
-Backend:
-Next.js API routes
-Node.js
+## Why Redis and BullMQ
+- Jobs persist even if the server restarts
+- Built-in retries with backoff
+- Workers can scale independently
 
-Queue:
-Redis
-BullMQ
+## Failure handling
+- Failed emails are retried automatically
+- Jobs are not lost on crashes
+- Backoff prevents repeated failures
 
-Database:
-MySQL
+## Setup
+- Clone the repository
+- Install dependencies
+- Start Redis
+- Run dev server
+- Run worker
 
-Why Redis and BullMQ:
-
-Jobs persist even if the server restarts
-Retries are built in
-Workers can scale independently
-
-Failure handling:
-
-Failed emails are retried automatically
-Jobs are not lost on crashes
-Backoff prevents repeated failures
-
-Setup:
-
-Clone the repo.
-Install dependencies.
-Start Redis.
-Run dev server.
-Run worker
-
-Author:
-
-Prince Jain.
-Building production-focused systems
+## Author
+- Prince Jain
