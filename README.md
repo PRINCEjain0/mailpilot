@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+MailPilot
 
-## Getting Started
+MailPilot is an email scheduling system built to reliably send emails at a future time using background jobs instead of cron hacks.
 
-First, run the development server:
+Problem
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Scheduling emails is unreliable when servers restart or traffic spikes. Cron jobs fail easily and do not scale.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+MailPilot uses a queue-based system so scheduled emails are not lost and can be retried safely.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+How it works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+User schedules an email
+Backend stores data in MySQL
+A delayed job is added to Redis using BullMQ
+Worker sends the email at the scheduled time
+Status is updated
 
-## Learn More
+Tech stack
 
-To learn more about Next.js, take a look at the following resources:
+Frontend
+Next.js
+TypeScript
+Tailwind CSS
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Backend
+Next.js API routes
+Node.js
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Queue
+Redis
+BullMQ
 
-## Deploy on Vercel
+Database
+MySQL
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Why Redis and BullMQ
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Jobs persist even if the server restarts
+Retries are built in
+Workers can scale independently
+
+Failure handling
+
+Failed emails are retried automatically
+Jobs are not lost on crashes
+Backoff prevents repeated failures
+
+Setup
+
+Clone the repo
+Install dependencies
+Start Redis
+Run dev server
+Run worker
+
+Author
+
+Prince Jain
+Building production-focused systems
