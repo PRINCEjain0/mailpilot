@@ -49,13 +49,13 @@ Backoff prevents repeated failures
 
 Setup:
 
-Clone the repo
-Install dependencies
-Start Redis
-Run dev server
+Clone the repo.
+Install dependencies.
+Start Redis.
+Run dev server.
 Run worker
 
 Author:
 
-Prince Jain
+Prince Jain.
 Building production-focused systems
